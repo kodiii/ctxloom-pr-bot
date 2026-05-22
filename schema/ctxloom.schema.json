@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/kodiii/ctxloom/blob/main/apps/pr-bot/schema/ctxloom.schema.json",
+  "title": "ctxloom pr-bot per-repo configuration",
+  "description": "Schema for `.ctxloom.yml` files placed at the root of any repository where the ctxloom pr-bot is installed. Editors that support YAML language services (VS Code with the YAML extension, JetBrains IDEs) can validate against this schema. See apps/pr-bot/src/config.ts for the source-of-truth Zod schema; this JSON Schema mirrors it.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "risk_threshold": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.7,
+      "description": "Minimum risk score (0-1) that triggers inline comments or blocks the check run."
+    },
+    "inline_comments": {
+      "type": "boolean",
+      "default": true,
+      "description": "Post inline review comments on high-risk diff hunks."
+    },
+    "suggested_reviewers": {
+      "type": "boolean",
+      "default": true,
+      "description": "Suggest reviewers based on ownership of high-risk modules."
+    },
+    "check_run": {
+      "type": "boolean",
+      "default": false,
+      "description": "Create a GitHub Check Run that can block merge when the overall PR risk exceeds risk_threshold."
+    },
+    "excluded_paths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Glob patterns for files the bot should never comment on (e.g. `**/*.lock`, `docs/**`)."
+    },
+    "max_inline_per_pr": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 50,
+      "default": 10,
+      "description": "Maximum number of inline comments to post on a single PR. Hard cap is 50."
+    }
+  }
+}

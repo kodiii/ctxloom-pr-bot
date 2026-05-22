@@ -1,0 +1,34 @@
+name: 'ctxloom PR review'
+description: >-
+  Posts a risk-scored summary comment + inline review notes on every pull
+  request, using ctxloom's local dependency graph + git overlay. No LLM
+  calls, no external services — runs entirely inside your CI on a
+  GHCR-hosted container image.
+author: 'Codzign'
+branding:
+  icon: 'git-pull-request'
+  color: 'purple'
+
+inputs:
+  github-token:
+    description: >-
+      GitHub token used to post comments. Defaults to the GITHUB_TOKEN
+      provided by the Actions runner. Your workflow must declare
+      `permissions: { pull-requests: write, contents: read, checks: write }`.
+    required: false
+    default: ${{ github.token }}
+
+# Docker action backed by a pre-built image on GHCR. Built and pushed
+# by `.github/workflows/pr-bot-publish-image.yml` on every `v*` tag.
+#
+# Why pre-built (not `image: Dockerfile`): GitHub's built-in Dockerfile
+# resolution uses the action's directory (apps/pr-bot/) as the Docker
+# build context. Our Dockerfile reaches into ../../packages/core/ for
+# the workspace dep, which only resolves from the repo root. Building
+# in our own workflow with the monorepo as context, pushing to GHCR,
+# and pointing here at `docker://ghcr.io/...` sidesteps the limitation.
+runs:
+  using: 'docker'
+  image: 'docker://ghcr.io/kodiii/ctxloom-pr-bot:v1'
+  env:
+    GITHUB_TOKEN: ${{ inputs.github-token }}
