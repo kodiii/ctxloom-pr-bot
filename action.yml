@@ -1,9 +1,9 @@
 name: 'ctxloom PR review'
-description: >-
-  Posts a risk-scored summary comment + inline review notes on every pull
-  request, using ctxloom's local dependency graph + git overlay. No LLM
-  calls, no external services — runs entirely inside your CI on a
-  GHCR-hosted container image.
+# Marketplace constraint: description MUST be < 125 characters.
+# The longer prose (architecture / what's posted / how it differs from
+# LLM-based reviewers) lives in apps/pr-bot/README.md; the Marketplace
+# listing is just the one-liner that fits in the search-result card.
+description: "Risk-scored PR review using your repo's local dependency graph. Inline + summary comments. No LLM, no external services."
 author: 'Codzign'
 branding:
   icon: 'git-pull-request'

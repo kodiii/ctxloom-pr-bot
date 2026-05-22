@@ -8,13 +8,15 @@ Uses ctxloom's local dependency graph + git overlay to find:
 - Who has historically owned the high-risk modules (reviewer suggestions)
 - Co-change patterns from git history that imports alone wouldn't surface
 
+> **Want LLM-narrated reviews on top?** See **[AI-REVIEWS.md](./AI-REVIEWS.md)** for the optional Claude integration — four specialist agents (security, architecture, testing, performance) running in parallel via Anthropic's official `claude-code-action`, with the ctxloom MCP server providing structural evidence so the LLM never hallucinates the graph. Risk-gated so you only spend tokens on PRs that actually need attention.
+
 ---
 
 ## Quick start
 
 ### Option 1 — `ctxloom install-pr-bot` (one command)
 
-If you have ctxloom installed (`npm install -g ctxloom-pro`), the fastest path is:
+If you have ctxloom installed (`npm install -g ctxloom-pro` — unpinned is fine for local dev; for CI use the exact-version pin shown in the workflow example), the fastest path is:
 
 ```bash
 cd /path/to/your/repo
