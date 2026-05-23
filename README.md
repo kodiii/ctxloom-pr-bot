@@ -55,7 +55,7 @@ jobs:
         with:
           fetch-depth: 0   # needed for git overlay (co-change history)
 
-      - uses: kodiii/ctxloom/apps/pr-bot@v1
+      - uses: kodiii/ctxloom-pr-bot@v1
 ```
 
 That's it. The first run builds the dependency graph for your repo (~10–60s for typical projects), subsequent runs reuse the workflow cache.
